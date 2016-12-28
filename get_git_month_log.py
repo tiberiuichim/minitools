@@ -5,16 +5,13 @@
 from github import Github
 from datetime import datetime, date
 from argparse import ArgumentParser
-from config import GITHUB_USERNAME, GITHUB_PASS, GITHUB_AUTHOR
+from config import GITHUB_USERNAME, GITHUB_PASS, GITHUB_AUTHOR, GITHUB_ORGS
 
 
 def is_work_repo(url):
-    if '/eea/' in url:
-        return True
-    if '/eaudeweb/' in url:
-        return True
-    if '/collective/' in url:
-        return True
+    for org in GITHUB_ORGS:
+        if '/{}/'.format(org) in url:
+            return True
     return False
 
 

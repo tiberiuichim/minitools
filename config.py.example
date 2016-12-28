@@ -1,3 +1,4 @@
 GITHUB_USERNAME=''
 GITHUB_PASS=''
 GITHUB_AUTHOR = ''
+GITHUB_ORGS = ['collective']

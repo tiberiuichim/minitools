@@ -90,3 +90,7 @@ ENV/
 
 # Personal settings
 config.py*
+*~
+bin/
+include/
+pip-selfcheck.json
