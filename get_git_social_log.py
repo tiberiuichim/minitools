@@ -9,7 +9,7 @@ from config import GITHUB_USERNAME, GITHUB_PASS
 
 
 def repo_title(repo):
-    return "{} ({}/{})".format(repo.full_name,
+    return "{} ({}/{})".format(repo.html_url,
                                repo.stargazers_count,
                                repo.raw_data['subscribers_count'])
 
