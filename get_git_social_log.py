@@ -42,17 +42,20 @@ def main():
         'WatchEvent': 'starred'
     }
 
-    for ev in events:
-        if not (ev.created_at.date() >= d):
-            break
-        if ev.type not in watched:
-            continue
-        actor = ev.actor
-        print("{} {} {}".format(
-            actor.name or actor.login,
-            watched[ev.type],
-            repo_title(ev.repo))
-        )
+    try:
+        for ev in events:
+            if not (ev.created_at.date() >= d):
+                break
+            if ev.type not in watched:
+                continue
+            actor = ev.actor
+            print("{} {} {}".format(
+                actor.name or actor.login,
+                watched[ev.type],
+                repo_title(ev.repo))
+            )
+    except KeyboardInterrupt:
+        print("Bye!")
 
 
 if __name__ == "__main__":
