@@ -1,4 +1,11 @@
+# get_git_social_log requirements
 GITHUB_USERNAME=''
 GITHUB_PASS=''
 GITHUB_AUTHOR = ''
+
+# get_git_month_log requirement
 GITHUB_ORGS = ['collective']
+
+#
+GOOGLE_EMAIL = 'someone@gmail.com'
+GOOGLE_MUSIC_PASS = ''

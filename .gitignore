@@ -93,4 +93,6 @@ config.py*
 *~
 bin/
 include/
+local/
+share/
 pip-selfcheck.json
