@@ -49,7 +49,7 @@ def main():
             if ev.type not in watched:
                 continue
             actor = ev.actor
-            print("{} {} {}".format(
+            print(u"{} {} {}".format(
                 actor.name or actor.login,
                 watched[ev.type],
                 repo_title(ev.repo))
