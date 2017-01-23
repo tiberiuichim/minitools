@@ -49,11 +49,14 @@ def main():
             if ev.type not in watched:
                 continue
             actor = ev.actor
-            print(u"{} {} {}".format(
-                actor.name or actor.login,
-                watched[ev.type],
-                repo_title(ev.repo))
-            )
+            try:
+                print(u"{} {} {}".format(
+                    actor.name or actor.login,
+                    watched[ev.type],
+                    repo_title(ev.repo))
+                )
+            except:
+                continue    # probably a repo that has been removed
     except KeyboardInterrupt:
         print("Bye!")
 
