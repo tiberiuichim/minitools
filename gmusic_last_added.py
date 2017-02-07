@@ -23,24 +23,7 @@ def get_datetime(ts):
     return d
 
 
-def main():
-
-    parser = ArgumentParser(description="Show last added music")
-    parser.add_argument('-d',
-                        '--days',
-                        help='Number of days in history',
-                        type=int,
-                        default=30)
-    parser.add_argument('-s',
-                        '--sync',
-                        help='Synchronise library with the latest songs',
-                        action="store_true")
-
-    args = parser.parse_args()
-
-    days = int(args.days)
-    sync = args.sync
-
+def get_songs(sync=False):
     if os.path.isfile('songs.json') and not sync:
         f = open('songs.json', 'r')
         songs = f.read()
@@ -68,9 +51,32 @@ def main():
         f.write(json.dumps(songs, indent=4, separators=(',', ': ')))
         f.close()
 
+    return songs
+
+
+def main():
+
+    parser = ArgumentParser(description="Show last added music")
+    parser.add_argument('-d',
+                        '--days',
+                        help='Number of days in history',
+                        type=int,
+                        default=30)
+    parser.add_argument('-s',
+                        '--sync',
+                        help='Synchronise library with the latest songs',
+                        action="store_true")
+
+    args = parser.parse_args()
+
+    days = int(args.days)
+    sync = args.sync
+
     result = []
     back = timedelta(days=days)
     now = datetime.now()
+
+    songs = get_songs(sync)
 
     for track in songs:
         d = get_datetime(track['creationTimestamp'])
