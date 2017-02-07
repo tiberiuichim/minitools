@@ -1,7 +1,7 @@
-#!/bin/env python
+#!/usr/bin/env python
 
 from __future__ import print_function
-from datetime import datetime
+from datetime import datetime, timedelta
 from gmusicapi import Mobileclient
 from argparse import ArgumentParser
 from tabulate import tabulate
@@ -26,11 +26,11 @@ def get_datetime(ts):
 def main():
 
     parser = ArgumentParser(description="Show last added music")
-    parser.add_argument('-m',
-                        '--months',
-                        help='Number of months',
+    parser.add_argument('-d',
+                        '--days',
+                        help='Number of days in history',
                         type=int,
-                        default=1)
+                        default=30)
     parser.add_argument('-s',
                         '--sync',
                         help='Synchronise library with the latest songs',
@@ -38,14 +38,13 @@ def main():
 
     args = parser.parse_args()
 
-    months = args.months
+    days = int(args.days)
     sync = args.sync
 
     if os.path.isfile('songs.json') and not sync:
         f = open('songs.json', 'r')
         songs = f.read()
         songs = json.loads(songs)
-
     else:
         api = Mobileclient()
         api.login(GOOGLE_EMAIL,
@@ -69,26 +68,16 @@ def main():
         f.write(json.dumps(songs, indent=4, separators=(',', ': ')))
         f.close()
 
-    c = 1
-    flag = True
-    final_list = []
+    result = []
+    back = timedelta(days=days)
+    now = datetime.now()
+
     for track in songs:
-
         d = get_datetime(track['creationTimestamp'])
+        if (now - d) < back:
+            result.append([track['title'], d.strftime("%a %d-%m-%Y %H:%M")])
 
-        if flag:
-            current_month = d.month
-            flag = False
-
-        if current_month != d.month:
-            c += 1
-            if c > months:
-                break
-
-        current_month = d.month
-        final_list.append([track['title'], d.strftime("%a %d-%m-%Y %H:%M")])
-
-    print(tabulate(final_list, headers=['Song', 'Date']))
+    print(tabulate(result, headers=['Song', 'Date']))
 
 if __name__ == "__main__":
     main()
