@@ -2,6 +2,7 @@
 """ Shows interesting activity from followed users of Github
 """
 
+from __future__ import print_function
 from github import Github
 from datetime import datetime, timedelta
 from argparse import ArgumentParser
