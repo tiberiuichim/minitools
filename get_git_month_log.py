@@ -1,4 +1,4 @@
-#!./bin/python
+#!./bin/python3
 
 
 # install https://github.com/PyGithub/PyGithub
@@ -38,8 +38,8 @@ def main():
 
         if month(event.created_at.date()) > this:
             continue
-        if month(event.created_at.date()) < this:
-            break
+        # if month(event.created_at.date()) < this:
+        #     break
 
         repo_url = event._repo.value.html_url
         if not is_work_repo(repo_url):
@@ -50,9 +50,9 @@ def main():
             if GITHUB_AUTHOR not in commit['author']['name'].lower():
                 continue
 
-            print tpl.format(event.created_at.date(),
+            print(tpl.format(event.created_at.date(),
                              repo,
-                             commit['message'])
+                             commit['message']))
 
 
 if __name__ == "__main__":
